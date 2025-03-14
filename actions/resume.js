@@ -44,16 +44,23 @@ export async function getResume() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
-  const user = await db.user.findUnique({
+  let user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
 
-  if (!user) throw new Error("User not found");
+  // 🛠️ If user doesn't exist, create it
+  if (!user) {
+    console.warn("User not found. Creating a new user in the database...");
+    user = await db.user.create({
+      data: {
+        clerkUserId: userId,
+        email: "default@example.com", // Get actual email from Clerk if available
+      },
+    });
+  }
 
   return await db.resume.findUnique({
-    where: {
-      userId: user.id,
-    },
+    where: { userId: user.id },
   });
 }
 

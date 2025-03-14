@@ -46,9 +46,9 @@ const HeroSection = () => {
               Get Started
             </Button>
           </Link>
-          <Link href="https://www.youtube.com/roadsidecoder">
+          <Link href="https://nextjs.org/docs">
             <Button size="lg" variant="outline" className="px-8">
-              Watch Demo
+              Docs Next.js
             </Button>
           </Link>
         </div>
